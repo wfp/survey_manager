@@ -1,0 +1,18 @@
+{
+  "name": "wfp/survey_manager",
+  "version": "0.0.0",
+  "type": "drupal-module",
+  "description": "Manage third-party surveys",
+  "authors": [
+    {
+      "name": "Otar Zakalashvili",
+      "email": "oto.zakalashvili@gmail.com",
+      "homepage": "http://otarza.space"
+    }
+  ],
+  "keywords": ["Drupal 8 Module","WFP"],
+  "license": "GPL-2.0+",
+  "homepage": "http://drupal.org/project/survey_manager",
+  "minimum-stability": "dev",
+  "require": {}
+}

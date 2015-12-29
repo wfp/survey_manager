@@ -1,0 +1,7 @@
+name: Survey Manager
+type: module
+description: Manage third-party surveys
+core: 8.x
+package: WFP
+dependencies:
+  - block
