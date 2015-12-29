@@ -25,27 +25,42 @@ class SurveyHtmlBlock extends BlockBase {
    */
   public function blockForm($form, FormStateInterface $form_state) {
 
+    $manage_survey_default_value = "";
+    if (isset($this->configuration['manage_survey'])) {
+      $manage_survey_default_value = $this->configuration['manage_survey'];
+    }
+
     $form['manage_survey'] = array(
       '#type'          => 'textfield',
       '#title'         => $this->t('Manage survey'),
       '#description'   => $this->t('Optional URL to third party survey tool.'),
-      '#default_value' => isset($this->configuration['manage_survey']) ? $this->configuration['manage_survey'] : "",
+      '#default_value' => $manage_survey_default_value,
       '#weight'        => '1',
     );
+
+    $html_default_value = "";
+    if (isset($this->configuration['html'])) {
+      $html_default_value = $this->configuration['html'];
+    }
 
     $form['html'] = array(
       '#type'          => 'textarea',
       '#title'         => $this->t('HTML Code'),
       '#description'   => $this->t('HTML code of the survey.'),
-      '#default_value' => isset($this->configuration['html']) ? $this->configuration['html'] : "",
+      '#default_value' => $html_default_value,
       '#weight'        => '1',
     );
+
+    $active_default_value = "";
+    if (isset($this->configuration['active'])) {
+      $active_default_value = $this->configuration['active'];
+    }
 
     $form['active'] = array(
       '#type'          => 'checkbox',
       '#title'         => $this->t('Active'),
       '#description'   => $this->t('Is the survey active?'),
-      '#default_value' => isset($this->configuration['active']) ? $this->configuration['active'] : "",
+      '#default_value' => $active_default_value,
       '#weight'        => '2',
     );
 
@@ -67,7 +82,7 @@ class SurveyHtmlBlock extends BlockBase {
    * {@inheritdoc}
    */
   public function build() {
-    $build                              = [];
+    $build                                     = [];
     $build['survey_htmlblock_html']['#markup'] = '<div>' . $this->configuration['html'] . '</div>';
 
     return $build;
