@@ -1,5 +1,5 @@
 {
-  "name": "wfp/survey_manager",
+  "name": "drupal/survey_manager",
   "version": "0.0.0",
   "type": "drupal-module",
   "description": "Manage third-party surveys",
@@ -10,9 +10,25 @@
       "homepage": "http://otarza.space"
     }
   ],
-  "keywords": ["Drupal 8 Module","WFP"],
+  "keywords": [
+    "survey"
+  ],
   "license": "GPL-2.0+",
   "homepage": "http://drupal.org/project/survey_manager",
-  "minimum-stability": "dev",
-  "require": {}
+  "require": {
+    "php": ">=5.5.9"
+  },
+  "require-dev": {
+    "drupal/coder": "8.2.5",
+    "andrewholgate/drupalstrict": "0.1.1",
+    "sebastian/phpcpd": "2.0.2"
+  },
+  "scripts": {
+    "phpcs": "./vendor/bin/phpcs --standard=Drupal,DrupalPractice,DrupalStrict --extensions=php,module,install,profile,drush.inc,test,admin.inc,yml,js,css --report-width=4 --colors --ignore=vendor/ ./",
+    "phpcpd": "./vendor/bin/phpcpd --names *.php,*.module,*.profile,*.install,*.drush.inc,*.test --min-lines 6 --min-tokens 10 --fuzzy --exclude=vendor ./",
+    "audit": "composer run phpcs && composer run phpcpd",
+    "post-install-cmd": [
+      "[ -f ./vendor/bin/phpcs ]; ./vendor/bin/phpcs --config-set installed_paths ../../drupal/coder/coder_sniffer,../../andrewholgate/drupalstrict"
+    ]
+  }
 }
