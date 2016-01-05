@@ -51,19 +51,6 @@ class SurveyHtmlBlock extends BlockBase {
       '#weight'        => '1',
     );
 
-    $active_default_value = "";
-    if (isset($this->configuration['active'])) {
-      $active_default_value = $this->configuration['active'];
-    }
-
-    $form['active'] = array(
-      '#type'          => 'checkbox',
-      '#title'         => $this->t('Active'),
-      '#description'   => $this->t('Is the survey active?'),
-      '#default_value' => $active_default_value,
-      '#weight'        => '2',
-    );
-
     return $form;
   }
 
@@ -74,7 +61,6 @@ class SurveyHtmlBlock extends BlockBase {
   public function blockSubmit($form, FormStateInterface $form_state) {
     $this->configuration['manage_survey'] = $form_state->getValue('manage_survey');
     $this->configuration['html']          = $form_state->getValue('html');
-    $this->configuration['active']        = $form_state->getValue('active');
   }
 
 

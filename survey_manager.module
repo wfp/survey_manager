@@ -6,6 +6,7 @@
  */
 
 use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\block\Entity\Block;
 
 /**
  * Implements hook_help().
@@ -14,5 +15,22 @@ function survey_manager_help($route_name, RouteMatchInterface $route_match) {
   if ($route_name === "help.page.survey_manager") {
     $output = '<p>' . t('Manage third-party surveys.') . '</p>';
     return $output;
+  }
+}
+
+/**
+ * Implements hook_page_bottom().
+ */
+function survey_manager_page_bottom(array &$page_bottom) {
+  $query     = \Drupal::entityQuery('block')
+    ->condition('plugin', 'survey_embed_code_block');
+  $block_ids = $query->execute();
+  $blocks    = Block::loadMultiple($block_ids);
+
+  foreach ($blocks as $block) {
+    // Check this answer http://drupal.stackexchange.com/a/185691/23477 .
+    if ($block->access('view')) {
+      $page_bottom['survey_manager'][] = ['#markup' => $block->get('settings')['embed_code']];
+    }
   }
 }

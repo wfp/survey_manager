@@ -5,3 +5,6 @@ core: 8.x
 package: WFP
 dependencies:
   - block
+
+regions:
+  embed_blocks: 'Embed Blocks'
