@@ -15,7 +15,7 @@ use Drupal\Core\Form\FormStateInterface;
  *
  * @Block(
  *  id = "survey_embed_code_block",
- *  admin_label = @Translation("Survey embed code block"),
+ *  admin_label = @Translation("Embed Survey"),
  * )
  */
 class SurveyEmbedCodeBlock extends BlockBase {

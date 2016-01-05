@@ -1,0 +1,7 @@
+survey_manager.survey_list_controller_index:
+  path: '/admin/structure/survey_manager'
+  defaults:
+    _controller: '\Drupal\survey_manager\Controller\SurveyListController::index'
+    _title: 'Available Surveys'
+  requirements:
+    _permission: 'Administer survey'

@@ -22,15 +22,40 @@ function survey_manager_help($route_name, RouteMatchInterface $route_match) {
  * Implements hook_page_bottom().
  */
 function survey_manager_page_bottom(array &$page_bottom) {
-  $query     = \Drupal::entityQuery('block')
-    ->condition('plugin', 'survey_embed_code_block');
-  $block_ids = $query->execute();
-  $blocks    = Block::loadMultiple($block_ids);
+  $surveys = _survey_manager_get_surveys('survey_embed_code_block');
 
-  foreach ($blocks as $block) {
+  foreach ($surveys as $block) {
     // Check this answer http://drupal.stackexchange.com/a/185691/23477 .
     if ($block->access('view')) {
       $page_bottom['survey_manager'][] = ['#markup' => $block->get('settings')['embed_code']];
     }
   }
+}
+
+/**
+ * Get list of survey blocks by type.
+ *
+ * @return array
+ *   Array of survey blocks.
+ */
+function _survey_manager_get_surveys($survey_plugin_id) {
+  $query      = \Drupal::entityQuery('block')
+    ->condition('plugin', $survey_plugin_id);
+  $survey_ids = $query->execute();
+  $surveys    = Block::loadMultiple($survey_ids);
+
+  return $surveys;
+}
+
+/**
+ * Implements hook_theme().
+ */
+function survey_manager_theme($existing, $type, $theme, $path) {
+  return array(
+    'surveys_list' => array(
+      'variables' => array(
+        'surveys' => NULL,
+      ),
+    ),
+  );
 }

@@ -15,7 +15,7 @@ use Drupal\Core\Form\FormStateInterface;
  *
  * @Block(
  *  id = "survey_htmlblock",
- *  admin_label = @Translation("Survey HTMLBlock"),
+ *  admin_label = @Translation("HTML Survey"),
  * )
  */
 class SurveyHtmlBlock extends BlockBase {
