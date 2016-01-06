@@ -32,7 +32,7 @@ class SurveyListController extends ControllerBase {
         t('Type'),
         t('Manage'),
       ),
-      '#empty'  => t('There are no surveys yet. You have to add HTML or Embed block.'),
+      '#empty'  => t('There are no surveys added. Add new surveys by <a href="@url">adding a new survey block.</a>', array('@url' => Url::fromRoute('block.admin_display')->toString()))
     );
 
     $embed_surveys = _survey_manager_get_surveys('survey_embed_code_block');
