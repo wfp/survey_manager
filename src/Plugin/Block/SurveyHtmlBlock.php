@@ -31,7 +31,7 @@ class SurveyHtmlBlock extends BlockBase {
     }
 
     $form['manage_survey'] = array(
-      '#type'          => 'textfield',
+      '#type'          => 'url',
       '#title'         => $this->t('Manage survey'),
       '#description'   => $this->t('Optional URL to third party survey tool.'),
       '#default_value' => $manage_survey_default_value,
