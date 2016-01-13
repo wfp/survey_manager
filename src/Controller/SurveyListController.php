@@ -24,8 +24,18 @@ class SurveyListController extends ControllerBase {
    *   Return Hello string.
    */
   public function index() {
+
+
+
     $surveys_table = array(
       '#type'   => 'table',
+      '#prefix' => t('<a href="@add_embed_survey_url">Add Embed Survey</a> <a href="@add_html_survey_url"> Add HTML Survey</a>',
+        array(
+          '@add_embed_survey_url' => Url::fromRoute('block.admin_add',
+            array('plugin_id' => 'survey_embed_code_block'))->toString(),
+          '@add_html_survey_url'  => Url::fromRoute('block.admin_add',
+            array('plugin_id' => 'survey_htmlblock'))->toString(),
+        )),
       '#header' => array(
         t('Name'),
         t('Sections'),
@@ -82,18 +92,18 @@ class SurveyListController extends ControllerBase {
         '#links' => array(),
       );
 
+      $surveys_table[$id]['operations']['#links']['edit'] = array(
+        'title' => t('Edit'),
+        'url'   => Url::fromRoute('entity.block.edit_form',
+          array("block" => $id)),
+      );
+
       if (!empty($survey->get('settings')['manage_survey'])) {
         $surveys_table[$id]['operations']['#links']['manage'] = array(
           'title' => t('Manage'),
           'url'   => Url::fromUri($survey->get('settings')['manage_survey']),
         );
       }
-
-      $surveys_table[$id]['operations']['#links']['edit'] = array(
-        'title' => t('Edit'),
-        'url'   => Url::fromRoute('entity.block.edit_form',
-          array("block" => $id)),
-      );
     }
 
     return $surveys_table;
