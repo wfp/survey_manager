@@ -23,12 +23,11 @@ function survey_manager_help($route_name, RouteMatchInterface $route_match) {
  */
 function survey_manager_page_bottom(array &$page_bottom) {
   $surveys                       = _survey_manager_get_surveys('survey_embed_code_block');
-  $page_bottom['survey_manager'] = ['#markup' => 'This is the bottom.'];
 
   foreach ($surveys as $block) {
     // Check this answer http://drupal.stackexchange.com/a/185691/23477 .
     if ($block->access('view')) {
-      $page_bottom['survey_manager'][] = ['#markup' => $block->get('settings')['embed_code']];
+      $page_bottom['survey_manager'][] = ['#markup' => $block->get('settings')['embed_code'], '#allowed_tags' => ['script']];
     }
   }
 }
