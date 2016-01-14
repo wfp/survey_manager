@@ -25,6 +25,13 @@ This is just a regular block, it has a field for storing whatever HTML you want 
 # Usage
 After installing this module you will see Survey Manger link under Structure menu. This is where all your surveys reside.
 
+You can create or edit surveys from that page.
+
+## Usage of filter [survey:id]
+This module implements filter for text formatters, you can enable this filter from your text formmatter configuration page.
+After enabling this filter you can use it in your content. e.g [survey:123] where 123 is the id of the survey you want to embed in your content.
+This Filter works fro HTML Surveys.
+
 
 # Developer Guideline
 
