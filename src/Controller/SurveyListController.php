@@ -24,9 +24,6 @@ class SurveyListController extends ControllerBase {
    *   Return Hello string.
    */
   public function index() {
-
-
-
     $surveys_table = array(
       '#type'   => 'table',
       '#prefix' => t('<a href="@add_embed_survey_url">Add Embed Survey</a> <a href="@add_html_survey_url"> Add HTML Survey</a>',
