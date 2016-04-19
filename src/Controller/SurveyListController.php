@@ -48,17 +48,17 @@ class SurveyListController extends ControllerBase {
       'attributes' => ['class' => 'action-links'],
     ]);
 
-    $surveys_table = array(
+    $surveys_table = [
       '#type'   => 'table',
       '#prefix' => $actions,
-      '#header' => array(
+      '#header' => [
         t('Name'),
         t('Sections'),
         t('Type'),
         t('Manage'),
-      ),
+      ],
       '#empty' => t('There are no surveys added.'),
-    );
+    ];
 
     $embed_surveys = _survey_manager_get_surveys('survey-embed');
     $html_surveys = _survey_manager_get_surveys('survey-html');
@@ -75,7 +75,7 @@ class SurveyListController extends ControllerBase {
         '#plain_text' => $survey->get('settings')['label'],
       );
 
-      $sections   = '';
+      $sections = '';
       $visibility = $survey->getVisibility();
 
       if (!empty($visibility['request_path'])) {
@@ -97,18 +97,24 @@ class SurveyListController extends ControllerBase {
         '#markup' => $sections,
       );
 
-      $surveys_table[$id]['type'] = array(
+      $surveys_table[$id]['type'] = [
         '#plain_text' => $definitions[$plugin_id]['admin_label']->getUntranslatedString(),
-      );
+      ];
 
-      $surveys_table[$id]['operations'] = array(
+      $surveys_table[$id]['operations'] = [
         '#type'  => 'operations',
-        '#links' => array(),
-      );
+        '#links' => [],
+      ];
 
       $surveys_table[$id]['operations']['#links']['edit'] = array(
         'title' => t('Edit'),
-        'url'   => Url::fromRoute('entity.block.edit_form',
+        'url' => Url::fromRoute('entity.block.edit_form',
+          array("block" => $id)),
+      );
+
+      $surveys_table[$id]['operations']['#links']['delete'] = array(
+        'title' => t('Delete'),
+        'url' => Url::fromRoute('entity.block.delete_form',
           array("block" => $id)),
       );
 
