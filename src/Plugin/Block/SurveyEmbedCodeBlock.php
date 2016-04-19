@@ -14,8 +14,8 @@ use Drupal\Core\Form\FormStateInterface;
  * Provides a 'SurveyEmbedCodeBlock' block.
  *
  * @Block(
- *  id = "survey_embed_code_block",
- *  admin_label = @Translation("Embed Survey"),
+ *  id = "survey-embed",
+ *  admin_label = @Translation("Survey embed"),
  * )
  */
 class SurveyEmbedCodeBlock extends BlockBase {
@@ -29,26 +29,26 @@ class SurveyEmbedCodeBlock extends BlockBase {
       $manage_survay_default_value = $this->configuration['manage_survey'];
     }
 
-    $form['manage_survey'] = array(
-      '#type'          => 'url',
-      '#title'         => $this->t('Manage survey'),
-      '#description'   => $this->t('Optional URL to third party survey tool.'),
+    $form['manage_survey'] = [
+      '#type' => 'url',
+      '#title' => $this->t('Manage survey'),
+      '#description' => $this->t('Optional URL to third party survey tool.'),
       '#default_value' => $manage_survay_default_value,
-      '#weight'        => '1',
-    );
+      '#weight' => 20,
+    ];
 
     $embed_code_default_value = '';
     if (isset($this->configuration['embed_code'])) {
       $embed_code_default_value = $this->configuration['embed_code'];
     }
 
-    $form['embed_code'] = array(
-      '#type'          => 'textarea',
-      '#title'         => $this->t('Embed Code'),
-      '#description'   => $this->t('Embed code of the survey.'),
+    $form['embed_code'] = [
+      '#type' => 'textarea',
+      '#title' => $this->t('Embed code'),
+      '#description' => $this->t('Embed code of the survey.'),
       '#default_value' => $embed_code_default_value,
-      '#weight'        => '3',
-    );
+      '#weight' => 10,
+    ];
 
     return $form;
   }
@@ -59,7 +59,7 @@ class SurveyEmbedCodeBlock extends BlockBase {
    */
   public function blockSubmit($form, FormStateInterface $form_state) {
     $this->configuration['manage_survey'] = $form_state->getValue('manage_survey');
-    $this->configuration['embed_code']    = $form_state->getValue('embed_code');
+    $this->configuration['embed_code'] = $form_state->getValue('embed_code');
   }
 
 
@@ -67,9 +67,9 @@ class SurveyEmbedCodeBlock extends BlockBase {
    * {@inheritdoc}
    */
   public function build() {
-    $build                                                     = [];
-    $build['survey_embed_code_block_manage_survey']['#markup'] = "";
-    $build['survey_embed_code_block_embed_code']['#markup']    = "";
+    $build = [];
+    $build['survey_embed_code_block_manage_survey']['#markup'] = '';
+    $build['survey_embed_code_block_embed_code']['#markup'] = '';
 
     return $build;
   }
