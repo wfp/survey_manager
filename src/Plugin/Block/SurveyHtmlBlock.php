@@ -9,14 +9,13 @@ namespace Drupal\survey_manager\Plugin\Block;
 
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Component\Utility\Xss;
 
 /**
  * Provides a 'Survey HtmlBlock' block.
  *
  * @Block(
  *  id = "survey-html",
- *  admin_label = @Translation("HTML Survey"),
+ *  admin_label = @Translation("Survey HTML"),
  * )
  */
 class SurveyHtmlBlock extends BlockBase {
@@ -46,7 +45,7 @@ class SurveyHtmlBlock extends BlockBase {
 
     $form['html'] = [
       '#type' => 'textarea',
-      '#title' => $this->t('HTML Code'),
+      '#title' => $this->t('HTML code'),
       '#description' => $this->t('HTML code of the survey.'),
       '#default_value' => $html_default_value,
       '#weight' => 10,
