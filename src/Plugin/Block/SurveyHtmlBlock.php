@@ -11,7 +11,7 @@ use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Form\FormStateInterface;
 
 /**
- * Provides a 'Survey HtmlBlock' block.
+ * Provides a 'Survey html' block.
  *
  * @Block(
  *  id = "survey-html",
@@ -54,7 +54,6 @@ class SurveyHtmlBlock extends BlockBase {
     return $form;
   }
 
-
   /**
    * {@inheritdoc}
    */
@@ -62,7 +61,6 @@ class SurveyHtmlBlock extends BlockBase {
     $this->configuration['manage_survey'] = $form_state->getValue('manage_survey');
     $this->configuration['html'] = $form_state->getValue('html');
   }
-
 
   /**
    * {@inheritdoc}

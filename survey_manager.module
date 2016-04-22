@@ -2,12 +2,13 @@
 
 /**
  * @file
- * Contains survey_manager.module..
+ * Contains survey_manager.module.
  */
 
 use Drupal\block\Entity\Block;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;;
 
 /**
  * Implements hook_help().
@@ -23,12 +24,15 @@ function survey_manager_help($route_name, RouteMatchInterface $route_match) {
  * Implements hook_page_bottom().
  */
 function survey_manager_page_bottom(array &$page_bottom) {
-  $surveys = _survey_manager_get_surveys('survey_embed_code_block');
-
+  // Get embedable suryves.
+  $surveys = _survey_manager_get_surveys('survey-embed');
   foreach ($surveys as $block) {
     // Check this answer http://drupal.stackexchange.com/a/185691/23477.
     if ($block->access('view')) {
-      $page_bottom['survey_manager'][] = ['#markup' => $block->get('settings')['embed_code'], '#allowed_tags' => ['script']];
+      $page_bottom['survey_manager'][] = [
+        '#markup' => $block->get('settings')['embed_code'],
+        '#allowed_tags' => ['script'],
+      ];
     }
   }
 }
@@ -41,16 +45,15 @@ function survey_manager_page_bottom(array &$page_bottom) {
  */
 function _survey_manager_get_surveys($survey_plugin_id) {
   $query = \Drupal::entityQuery('block')->condition('plugin', $survey_plugin_id);
-  $survey_ids = $query->execute();
-  $surveys = Block::loadMultiple($survey_ids);
-
-  return $surveys;
+  return Block::loadMultiple($query->execute());
 }
 
 /**
  * Implements hook_form_alter().
  */
 function survey_manager_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  $form['actions']['submit']['#submit'][] = '_survey_manager_submit_handler';
+
   if ($form_id == "block_admin_display_form") {
     foreach ($form['blocks'] as $key => $block) {
       if (!empty($block['operations']['#links']['edit']['url'])) {
@@ -63,15 +66,6 @@ function survey_manager_form_alter(&$form, FormStateInterface $form_state, $form
   }
 }
 
-/**
- * Implements hook_theme().
- */
-function survey_manager_theme($existing, $type, $theme, $path) {
-  return array(
-    'surveys_list' => array(
-      'variables' => array(
-        'surveys' => NULL,
-      ),
-    ),
-  );
+function _survey_manager_submit_handler() {
+  return new RedirectResponse(\Drupal::url('user.page'));
 }

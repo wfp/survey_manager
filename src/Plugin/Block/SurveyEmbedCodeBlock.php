@@ -53,7 +53,6 @@ class SurveyEmbedCodeBlock extends BlockBase {
     return $form;
   }
 
-
   /**
    * {@inheritdoc}
    */
@@ -61,7 +60,6 @@ class SurveyEmbedCodeBlock extends BlockBase {
     $this->configuration['manage_survey'] = $form_state->getValue('manage_survey');
     $this->configuration['embed_code'] = $form_state->getValue('embed_code');
   }
-
 
   /**
    * {@inheritdoc}
