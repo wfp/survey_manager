@@ -8,7 +8,6 @@
 use Drupal\block\Entity\Block;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Form\FormStateInterface;
-use Symfony\Component\HttpFoundation\RedirectResponse;;
 
 /**
  * Implements hook_help().
@@ -52,8 +51,6 @@ function _survey_manager_get_surveys($survey_plugin_id) {
  * Implements hook_form_alter().
  */
 function survey_manager_form_alter(&$form, FormStateInterface $form_state, $form_id) {
-  $form['actions']['submit']['#submit'][] = '_survey_manager_submit_handler';
-
   if ($form_id == "block_admin_display_form") {
     foreach ($form['blocks'] as $key => $block) {
       if (!empty($block['operations']['#links']['edit']['url'])) {
@@ -64,8 +61,4 @@ function survey_manager_form_alter(&$form, FormStateInterface $form_state, $form
       }
     }
   }
-}
-
-function _survey_manager_submit_handler() {
-  return new RedirectResponse(\Drupal::url('user.page'));
 }
