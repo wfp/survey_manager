@@ -1,0 +1,11 @@
+survey_manager.survey.add:
+  route_name: 'entity.survey.add_form'
+  title: 'Add survey html'
+  appears_on:
+    - entity.survey.collection
+
+survey_manager.survey_embed.add:
+  route_name: 'entity.survey.add_form'
+  title: 'Add survey embed'
+  appears_on:
+    - entity.survey.collection

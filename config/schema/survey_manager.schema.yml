@@ -1,0 +1,16 @@
+survey_manager.survey.*:
+  type: config_entity
+  label: 'Survey'
+  mapping:
+    id:
+      type: string
+      label: 'ID'
+    label:
+      type: label
+      label: 'Title'
+    code:
+      type: text
+      label: 'HTML code'
+    visibility:
+      type: sequence
+      label: 'Visibility'

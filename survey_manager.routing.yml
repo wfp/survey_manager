@@ -1,7 +1,28 @@
-survey_manager.survey_list_controller_index:
-  path: '/admin/structure/survey-manager'
+entity.survey.collection:
+  path: '/admin/structure/survey'
   defaults:
-    _controller: '\Drupal\survey_manager\Controller\SurveyListController::surveyListPage'
-    _title: 'Available surveys'
+    _entity_list: 'survey'
+    _title: 'Survey collection'
   requirements:
-    _permission: 'Administer survey'
+    _permission: 'administer survey'
+entity.survey.add_form:
+  path: '/admin/strcuture/survey/add'
+  defaults:
+    _entity_form: 'survey.add'
+    _title: 'Add survey'
+  requirements:
+    _permission: 'administer survey'
+entity.survey.edit_form:
+  path: '/admin/structure/survey/{survey}/edit'
+  defaults:
+    _entity_form: 'survey.edit'
+    _title: 'Edit survey'
+  requirements:
+    _permission: 'administer survey'
+entity.survey.delete_form:
+  path: '/admin/structure/survey/{survey}/delete'
+  defaults:
+    _entity_form: 'survey.delete'
+    _title: 'Delete survey'
+  requirements:
+    _permission: 'administer survey'
