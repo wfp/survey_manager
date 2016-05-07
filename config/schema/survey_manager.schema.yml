@@ -8,9 +8,12 @@ survey_manager.survey.*:
     label:
       type: label
       label: 'Title'
+    type:
+      type: string
+      label: 'Type'
     code:
       type: text
       label: 'HTML code'
     visibility:
-      type: sequence
+      type: mapping
       label: 'Visibility'

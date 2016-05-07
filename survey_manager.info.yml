@@ -3,6 +3,4 @@ type: module
 description: Manage third-party surveys
 core: 8.x
 package: WFP
-dependencies:
-  - block
-configure: survey_manager.survey_list_controller_index
+configure: survey_manager.entity.survey.collection

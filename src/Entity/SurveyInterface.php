@@ -8,4 +8,8 @@ interface SurveyInterface extends ConfigEntityInterface {
 
   public function getCode();
 
+  public function getType();
+
+  public function getVisibility();
+
 }
