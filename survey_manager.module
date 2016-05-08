@@ -6,14 +6,31 @@
  */
 
 use Drupal\Core\Routing\RouteMatchInterface;
-use Drupal\Core\Form\FormStateInterface;
+use Drupal\survey_manager\Entity\SurveyEmbed;
 
 /**
  * Implements hook_help().
  */
 function survey_manager_help($route_name, RouteMatchInterface $route_match) {
   if ($route_name === 'help.page.survey_manager') {
-    $output = '<p>' . t('Manage surveys') . '</p>';
-    return $output;
+    return '<p>' . t('Manage survey') . '</p>';;
+  }
+}
+
+/**
+ * Implements hook_page_bottom().
+ */
+function survey_manager_page_bottom(array &$page_bottom) {
+  $entitys = array_filter(SurveyEmbed::loadMultiple(), function($entity) {
+    return $entity->getType() === 'EMBED';
+  });
+
+  foreach ($entitys as $entity) {
+    if ($entity->accessable()) {
+      $page_bottom['survey_manager'][] = [
+        '#markup' => $entity->getCode(),
+        '#allowed_tags' => ['script'],
+      ];
+    }
   }
 }

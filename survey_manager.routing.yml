@@ -26,3 +26,31 @@ entity.survey.delete_form:
     _title: 'Delete survey'
   requirements:
     _permission: 'administer survey'
+entity.survey_embed.collection:
+  path: '/admin/structure/survey-embed'
+  defaults:
+    _entity_list: 'survey'
+    _title: 'Survey manager'
+  requirements:
+    _permission: 'administer survey'
+entity.survey_embed.add_form:
+  path: '/admin/strcuture/survey-embed/add'
+  defaults:
+    _entity_form: 'survey_embed.add'
+    _title: 'Add survey'
+  requirements:
+    _permission: 'administer survey'
+entity.survey_embed.edit_form:
+  path: '/admin/structure/survey-embed/{survey}/edit'
+  defaults:
+    _entity_form: 'survey_embed.edit'
+    _title: 'Edit survey'
+  requirements:
+    _permission: 'administer survey'
+entity.survey_embed.delete_form:
+  path: '/admin/structure/survey-embed/{survey}/delete'
+  defaults:
+    _entity_form: 'survey_embed.delete'
+    _title: 'Delete survey'
+  requirements:
+    _permission: 'administer survey'

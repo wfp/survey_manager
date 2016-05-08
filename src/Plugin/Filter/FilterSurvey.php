@@ -28,29 +28,19 @@ class FilterSurvey extends FilterBase {
    */
   public function process($text, $langcode) {
     $result = new FilterProcessResult($text);
-
     if (preg_match_all('/\[survey\:(.+)\]/', $text, $match)) {
       if (isset($match[1]) && is_array($match[1])) {
         foreach ($match[1] as $sid) {
           $entity = Survey::load($sid);
-
-          $entity->accessable();
+          if ($entity->accessable()) {
+            $replacement = $entity->getCode();
+            $text = str_replace($match[0], $replacement, $text);
+            $result->setProcessedText($text);
+            $result->setCacheTags($entity->getCacheTags());
+          }
         }
       }
     }
-/*
-    $token = $result[0];
-    $start = strpos($token, ':') + 1;
-    $length = strpos($token, ']') - $start;
-    $id = substr($token, $start, $length);
-    $block  = Block::load($id);
-    if ($block) {
-      $replace  = $block->get('settings')['html'];
-      $new_text = str_replace($token, $replace, $text);
-      $filter_result->setProcessedText($new_text);
-      $filter_result->setCacheTags($block->getCacheTags());
-    }
-*/
 
     return $result;
   }

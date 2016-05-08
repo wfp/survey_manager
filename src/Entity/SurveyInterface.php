@@ -12,4 +12,6 @@ interface SurveyInterface extends ConfigEntityInterface {
 
   public function getVisibility();
 
+  public function accessable();
+
 }

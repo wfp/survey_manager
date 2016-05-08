@@ -1,6 +1,6 @@
 name: Survey Manager
 type: module
-description: Manage third-party surveys
+description: Manage survey
 core: 8.x
 package: WFP
-configure: survey_manager.entity.survey.collection
+configure: entity.survey.collection
