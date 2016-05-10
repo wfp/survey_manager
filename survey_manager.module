@@ -1,0 +1,64 @@
+<?php
+
+/**
+ * @file
+ * Contains survey_manager.module.
+ */
+
+use Drupal\block\Entity\Block;
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Form\FormStateInterface;
+
+/**
+ * Implements hook_help().
+ */
+function survey_manager_help($route_name, RouteMatchInterface $route_match) {
+  if ($route_name === 'help.page.survey_manager') {
+    $output = '<p>' . t('Manage third-party surveys.') . '</p>';
+    return $output;
+  }
+}
+
+/**
+ * Implements hook_page_bottom().
+ */
+function survey_manager_page_bottom(array &$page_bottom) {
+  // Get embedable suryves.
+  $surveys = _survey_manager_get_surveys('survey-embed');
+  foreach ($surveys as $block) {
+    // Check this answer http://drupal.stackexchange.com/a/185691/23477.
+    if ($block->access('view')) {
+      $page_bottom['survey_manager'][] = [
+        '#markup' => $block->get('settings')['embed_code'],
+        '#allowed_tags' => ['script'],
+      ];
+    }
+  }
+}
+
+/**
+ * Get list of survey blocks by type.
+ *
+ * @return array
+ *   Array of survey blocks.
+ */
+function _survey_manager_get_surveys($survey_plugin_id) {
+  $query = \Drupal::entityQuery('block')->condition('plugin', $survey_plugin_id);
+  return Block::loadMultiple($query->execute());
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function survey_manager_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  if ($form_id == "block_admin_display_form") {
+    foreach ($form['blocks'] as $key => $block) {
+      if (!empty($block['operations']['#links']['edit']['url'])) {
+        $block_plugin_id = $block['operations']['#links']['edit']['url']->getOptions()['entity']->getPluginId();
+        if ($block_plugin_id == 'survey_embed_code_block') {
+          unset($form['blocks'][$key]);
+        }
+      }
+    }
+  }
+}

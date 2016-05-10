@@ -1,0 +1,6 @@
+survey_manager.list_surveys:
+  title: 'Survey Manager'
+  description: 'List all available surveys.'
+  parent: system.admin_structure
+  route_name: survey_manager.survey_list_controller_index
+  weight: 100
