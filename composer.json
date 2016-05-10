@@ -1,6 +1,5 @@
 {
   "name": "drupal/survey_manager",
-  "version": "0.0.0",
   "type": "drupal-module",
   "description": "Manage third-party surveys",
   "authors": [

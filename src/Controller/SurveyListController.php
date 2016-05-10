@@ -18,87 +18,105 @@ use Drupal\Core\Url;
 class SurveyListController extends ControllerBase {
 
   /**
-   * Index.
+   * Survey list page.
    *
    * @return string
-   *   Return Hello string.
+   *   Survey HTML table.
    */
-  public function index() {
-    $surveys_table = array(
+  public function surveyListPage() {
+    $button_class = 'button button-action button--primary button--small';
+    $route = 'block.admin_add';
+    $actions = \Drupal::theme()->render('item_list', [
+      'items' => [
+        $this->l(t('Add embed survey'), Url::fromRoute($route, [
+          'plugin_id' => 'survey-embed',
+        ], [
+          'attributes' => [
+            'class' => $button_class,
+          ]
+        ])),
+        $this->l(t('Add HTML survey'), Url::fromRoute($route, [
+          'plugin_id' => 'survey-html',
+        ], [
+          'attributes' => [
+            'class' => $button_class,
+          ]
+        ])),
+      ],
+      'attributes' => ['class' => 'action-links'],
+    ]);
+
+    $surveys_table = [
       '#type'   => 'table',
-      '#prefix' => t('<a href="@add_embed_survey_url">Add Embed Survey</a> <a href="@add_html_survey_url"> Add HTML Survey</a>',
-        array(
-          '@add_embed_survey_url' => Url::fromRoute('block.admin_add',
-            array('plugin_id' => 'survey_embed_code_block'))->toString(),
-          '@add_html_survey_url'  => Url::fromRoute('block.admin_add',
-            array('plugin_id' => 'survey_htmlblock'))->toString(),
-        )),
-      '#header' => array(
+      '#prefix' => $actions,
+      '#header' => [
         t('Name'),
         t('Sections'),
         t('Type'),
         t('Manage'),
-      ),
-      '#empty'  => t('There are no surveys added.'),
-    );
+      ],
+      '#empty' => t('There are no surveys added.'),
+    ];
 
-    $embed_surveys = _survey_manager_get_surveys('survey_embed_code_block');
-    $html_surveys  = _survey_manager_get_surveys('survey_htmlblock');
+    $embed_surveys = _survey_manager_get_surveys('survey-embed');
+    $html_surveys = _survey_manager_get_surveys('survey-html');
 
     $surveys = array_merge($embed_surveys, $html_surveys);
 
-    $manager     = \Drupal::service('plugin.manager.block');
+    $manager = \Drupal::service('plugin.manager.block');
     $definitions = $manager->getDefinitions();
 
     foreach ($surveys as $id => $survey) {
       $plugin_id = $survey->get('settings')['id'];
 
-      $surveys_table[$id]['name'] = array(
+      $surveys_table[$id]['name'] = [
         '#plain_text' => $survey->get('settings')['label'],
-      );
+      ];
 
-      $sections   = "";
+      $sections = '';
       $visibility = $survey->getVisibility();
 
       if (!empty($visibility['request_path'])) {
         $pages = explode(PHP_EOL, $visibility['request_path']['pages']);
-        $sections .= "Pages : " . implode(", ", $pages) . "</br>";
+        $sections .= 'Pages: ' . implode(', ', $pages) . '</br>';
       }
 
       if (!empty($visibility['node_type'])) {
-        $sections .= "Content Types : " . implode(", ",
-            $visibility['node_type']['bundles']) . "</br>";
+        $sections .= 'Content Types: ' . implode(', ', $visibility['node_type']['bundles']) . '</br>';
       }
 
       if (!empty($visibility['user_role'])) {
-        $sections .= "Roles: " . implode(", ",
-            $visibility['user_role']['roles']) . "</br>";
+        $sections .= 'Roles: ' . implode(', ', $visibility['user_role']['roles']) . '</br>';
       }
 
-      $surveys_table[$id]['sections'] = array(
+      $surveys_table[$id]['sections'] = [
         '#markup' => $sections,
-      );
+      ];
 
-      $surveys_table[$id]['type'] = array(
+      $surveys_table[$id]['type'] = [
         '#plain_text' => $definitions[$plugin_id]['admin_label']->getUntranslatedString(),
-      );
+      ];
 
-      $surveys_table[$id]['operations'] = array(
+      $surveys_table[$id]['operations'] = [
         '#type'  => 'operations',
-        '#links' => array(),
-      );
+        '#links' => [],
+      ];
 
-      $surveys_table[$id]['operations']['#links']['edit'] = array(
+      $surveys_table[$id]['operations']['#links']['edit'] = [
         'title' => t('Edit'),
-        'url'   => Url::fromRoute('entity.block.edit_form',
-          array("block" => $id)),
-      );
+        'url' => Url::fromRoute('entity.block.edit_form', ['block' => $id]),
+      ];
+
+      $surveys_table[$id]['operations']['#links']['delete'] = [
+        'title' => t('Delete'),
+        'url' => Url::fromRoute('entity.block.delete_form', ['block' => $id]),
+      ];
 
       if (!empty($survey->get('settings')['manage_survey'])) {
-        $surveys_table[$id]['operations']['#links']['manage'] = array(
+        $surveys_table[$id]['operations']['#links']['manage'] = [
           'title' => t('Manage'),
-          'url'   => Url::fromUri($survey->get('settings')['manage_survey']),
-        );
+          'url' => Url::fromUri($survey->get('settings')['manage_survey']),
+        ];
       }
     }
 
