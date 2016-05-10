@@ -24,9 +24,8 @@ class SurveyHtmlBlock extends BlockBase {
    * {@inheritdoc}
    */
   public function blockForm($form, FormStateInterface $form_state) {
-
     $manage_survey_default_value = '';
-    if (isset($this->configuration['manage_survey'])) {
+    if ($this->configuration['manage_survey'] && isset($this->configuration['manage_survey'])) {
       $manage_survey_default_value = $this->configuration['manage_survey'];
     }
 
@@ -57,19 +56,19 @@ class SurveyHtmlBlock extends BlockBase {
   /**
    * {@inheritdoc}
    */
-  public function blockSubmit($form, FormStateInterface $form_state) {
-    $this->configuration['manage_survey'] = $form_state->getValue('manage_survey');
-    $this->configuration['html'] = $form_state->getValue('html');
-  }
-
-  /**
-   * {@inheritdoc}
-   */
   public function build() {
     $build = [];
     $build['survey_html']['#markup'] = '<div>' . $this->configuration['html'] . '</div>';
 
     return $build;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function blockSubmit($form, FormStateInterface $form_state) {
+    $this->configuration['manage_survey'] = $form_state->getValue('manage_survey');
+    $this->configuration['html'] = $form_state->getValue('html');
   }
 
 }

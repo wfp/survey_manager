@@ -29,10 +29,10 @@ class SurveyEmbedCodeBlock extends BlockBase {
       $manage_survay_default_value = $this->configuration['manage_survey'];
     }
 
-    $form['manage_survey'] = [
+    $form['manage_survey_embed'] = [
       '#type' => 'url',
-      '#title' => $this->t('Manage survey'),
-      '#description' => $this->t('Optional URL to third party survey tool.'),
+      '#title' => $this->t('Manage survey embed'),
+      '#description' => $this->t('Optional URL to third party survey embed tool.'),
       '#default_value' => $manage_survay_default_value,
       '#weight' => 20,
     ];
@@ -57,7 +57,7 @@ class SurveyEmbedCodeBlock extends BlockBase {
    * {@inheritdoc}
    */
   public function blockSubmit($form, FormStateInterface $form_state) {
-    $this->configuration['manage_survey'] = $form_state->getValue('manage_survey');
+    $this->configuration['manage_survey'] = $form_state->getValue('manage_survey_embed');
     $this->configuration['embed_code'] = $form_state->getValue('embed_code');
   }
 
