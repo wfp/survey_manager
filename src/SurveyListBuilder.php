@@ -1,14 +1,28 @@
 <?php
 
+/**
+ * @file
+ * Contains \Drupal\survey_manager\SurveyListBuilder.
+ */
+
 namespace Drupal\survey_manager;
 
 use Drupal\Core\Config\Entity\ConfigEntityListBuilder;
 use Drupal\Core\Entity\EntityInterface;
-use Drupal\Component\Utility\Html;
 use Drupal\Component\Render\FormattableMarkup;
+use Drupal\Component\Utility\Html;
 
+/**
+ * Provides a listing of survey entities.
+ */
 class SurveyListBuilder extends ConfigEntityListBuilder {
 
+  /**
+   * Display visibility.
+   *
+   * @param string $message
+   *   (optional) The operation being performed.
+   */
   protected function visibility(EntityInterface $entity) {
     $visibility = $entity->getVisibility();
     $output = '';

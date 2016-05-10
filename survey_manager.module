@@ -27,7 +27,7 @@ function survey_manager_page_bottom(array &$page_bottom) {
 
   foreach ($entitys as $entity) {
     if ($entity->accessable()) {
-      $page_bottom['survey_manager'][] = [
+      $page_bottom['survey'][] = [
         '#markup' => $entity->getCode(),
         '#allowed_tags' => ['script'],
       ];

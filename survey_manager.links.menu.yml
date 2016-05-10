@@ -1,5 +1,5 @@
 survey_manager.collection:
-  title: 'Survey collection'
+  title: 'Survey manager'
   description: 'List all available surveys'
   parent: system.admin_structure
   route_name: entity.survey.collection

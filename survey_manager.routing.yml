@@ -2,7 +2,7 @@ entity.survey.collection:
   path: '/admin/structure/survey'
   defaults:
     _entity_list: 'survey'
-    _title: 'Survey collection'
+    _title: 'Survey manager'
   requirements:
     _permission: 'administer survey'
 entity.survey.add_form:
