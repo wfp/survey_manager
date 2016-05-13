@@ -9,6 +9,7 @@ namespace Drupal\survey_manager\Plugin\Block;
 
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Component\Utility\Xss;
 
 /**
  * Provides a 'Survey html' block.
@@ -34,7 +35,7 @@ class SurveyHtmlBlock extends BlockBase {
       '#title' => $this->t('Manage survey'),
       '#description' => $this->t('Optional URL to third party survey tool.'),
       '#default_value' => $manage_survey_default_value,
-      '#weight'=> 20,
+      '#weight' => 20,
     ];
 
     $html_default_value = '';
@@ -49,6 +50,8 @@ class SurveyHtmlBlock extends BlockBase {
       '#default_value' => $html_default_value,
       '#weight' => 10,
     ];
+
+    $form['#attributes'] = ['class' => ['block-survey-form']];
 
     return $form;
   }
@@ -68,7 +71,7 @@ class SurveyHtmlBlock extends BlockBase {
    */
   public function blockSubmit($form, FormStateInterface $form_state) {
     $this->configuration['manage_survey'] = $form_state->getValue('manage_survey');
-    $this->configuration['html'] = $form_state->getValue('html');
+    $this->configuration['html'] = Xss::filter($form_state->getValue('html'));
   }
 
 }

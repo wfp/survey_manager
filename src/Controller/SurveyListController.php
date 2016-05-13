@@ -33,14 +33,14 @@ class SurveyListController extends ControllerBase {
         ], [
           'attributes' => [
             'class' => $button_class,
-          ]
+          ],
         ])),
         $this->l(t('Add HTML survey'), Url::fromRoute($route, [
           'plugin_id' => 'survey-html',
         ], [
           'attributes' => [
             'class' => $button_class,
-          ]
+          ],
         ])),
       ],
       'attributes' => ['class' => 'action-links'],
