@@ -58,6 +58,7 @@ function survey_manager_form_alter(&$form, FormStateInterface $form_state, $form
         $form['actions']['submit']['#submit'][] = 'survey_manager_block_submit_callback';
       }
       break;
+
     case 'block_admin_display_form':
       foreach ($form['blocks'] as $key => $block) {
         if (!empty($block['operations']['#links']['edit']['url'])) {

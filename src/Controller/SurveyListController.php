@@ -33,14 +33,14 @@ class SurveyListController extends ControllerBase {
         ], [
           'attributes' => [
             'class' => $button_class,
-          ]
+          ],
         ])),
         $this->l(t('Add HTML survey'), Url::fromRoute($route, [
           'plugin_id' => 'survey-html',
         ], [
           'attributes' => [
             'class' => $button_class,
-          ]
+          ],
         ])),
       ],
       'attributes' => ['class' => 'action-links'],
@@ -109,7 +109,7 @@ class SurveyListController extends ControllerBase {
 
       $surveys_table[$id]['operations']['#links']['delete'] = [
         'title' => t('Delete'),
-        'url' => Url::fromRoute('entity.block.delete_form', ['block' => $id, 'survey' => 1]),
+        'url' => Url::fromRoute('entity.block.delete_form', ['block' => $id]),
       ];
 
       if (!empty($survey->get('settings')['manage_survey'])) {

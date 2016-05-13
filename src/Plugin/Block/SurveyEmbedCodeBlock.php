@@ -9,7 +9,6 @@ namespace Drupal\survey_manager\Plugin\Block;
 
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Form\FormStateInterface;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
  * Provides a 'SurveyEmbedCodeBlock' block.

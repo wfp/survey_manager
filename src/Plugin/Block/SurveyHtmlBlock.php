@@ -30,14 +30,12 @@ class SurveyHtmlBlock extends BlockBase {
       $manage_survey_default_value = $this->configuration['manage_survey'];
     }
 
-    $form['#attributes'] = ['class' => ['block-survey-form']];
-
     $form['manage_survey'] = [
       '#type' => 'url',
       '#title' => $this->t('Manage survey'),
       '#description' => $this->t('Optional URL to third party survey tool.'),
       '#default_value' => $manage_survey_default_value,
-      '#weight'=> 20,
+      '#weight' => 20,
     ];
 
     $html_default_value = '';
@@ -52,6 +50,8 @@ class SurveyHtmlBlock extends BlockBase {
       '#default_value' => $html_default_value,
       '#weight' => 10,
     ];
+
+    $form['#attributes'] = ['class' => ['block-survey-form']];
 
     return $form;
   }
