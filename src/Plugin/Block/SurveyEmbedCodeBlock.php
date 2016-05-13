@@ -29,6 +29,8 @@ class SurveyEmbedCodeBlock extends BlockBase {
       $manage_survay_default_value = $this->configuration['manage_survey'];
     }
 
+    $form['#attributes'] = ['class' => ['block-survey-form']];
+
     $form['manage_survey_embed'] = [
       '#type' => 'url',
       '#title' => $this->t('Manage survey embed'),
