@@ -8,6 +8,7 @@
 use Drupal\block\Entity\Block;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
  * Implements hook_help().
@@ -51,14 +52,32 @@ function _survey_manager_get_surveys($survey_plugin_id) {
  * Implements hook_form_alter().
  */
 function survey_manager_form_alter(&$form, FormStateInterface $form_state, $form_id) {
-  if ($form_id == "block_admin_display_form") {
-    foreach ($form['blocks'] as $key => $block) {
-      if (!empty($block['operations']['#links']['edit']['url'])) {
-        $block_plugin_id = $block['operations']['#links']['edit']['url']->getOptions()['entity']->getPluginId();
-        if ($block_plugin_id == 'survey_embed_code_block') {
-          unset($form['blocks'][$key]);
+  switch ($form_id) {
+    case 'block_form':
+      if ($form['settings']['#attributes']['class'][0] == 'block-survey-form') {
+        $form['actions']['submit']['#submit'][] = 'survey_manager_block_submit_callback';
+      }
+      break;
+    case 'block_admin_display_form':
+      foreach ($form['blocks'] as $key => $block) {
+        if (!empty($block['operations']['#links']['edit']['url'])) {
+          $block_plugin_id = $block['operations']['#links']['edit']['url']->getOptions()['entity']->getPluginId();
+          if ($block_plugin_id == 'survey_embed_code_block') {
+            unset($form['blocks'][$key]);
+          }
         }
       }
-    }
+      break;
   }
+}
+
+/**
+ * Custom block submit callback.
+ *
+ * @return \Symfony\Component\HttpFoundation\RedirectResponse
+ *   Redirects to the survey list page.
+ */
+function survey_manager_block_submit_callback() {
+  $response = new RedirectResponse(\Drupal::url('survey_manager.survey_list_controller_index'));
+  return $response->send();
 }

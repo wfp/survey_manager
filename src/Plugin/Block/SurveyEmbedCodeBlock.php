@@ -9,6 +9,7 @@ namespace Drupal\survey_manager\Plugin\Block;
 
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Form\FormStateInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
  * Provides a 'SurveyEmbedCodeBlock' block.
@@ -28,6 +29,8 @@ class SurveyEmbedCodeBlock extends BlockBase {
     if (isset($this->configuration['manage_survey'])) {
       $manage_survay_default_value = $this->configuration['manage_survey'];
     }
+
+    $form['#attributes'] = ['class' => ['block-survey-form']];
 
     $form['manage_survey_embed'] = [
       '#type' => 'url',

@@ -109,7 +109,7 @@ class SurveyListController extends ControllerBase {
 
       $surveys_table[$id]['operations']['#links']['delete'] = [
         'title' => t('Delete'),
-        'url' => Url::fromRoute('entity.block.delete_form', ['block' => $id]),
+        'url' => Url::fromRoute('entity.block.delete_form', ['block' => $id, 'survey' => 1]),
       ];
 
       if (!empty($survey->get('settings')['manage_survey'])) {
